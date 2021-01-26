@@ -5,3 +5,8 @@ spdlog/1.8.2
 
 [generators]
 cmake
+
+[options]
+yaml-cpp:shared=False
+openssl:shared=False
+spdlog:shared=False

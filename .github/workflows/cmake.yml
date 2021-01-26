@@ -1,0 +1,42 @@
+name: CMake
+
+on: [push]
+
+env:
+  BUILD_TYPE: Debug
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04 # lastest is 18.04 which do not support C++17
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Get Conan
+      uses: turtlebrowser/get-conan@v1.0
+
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{github.workspace}}/build
+
+    - name: Create Conan profile
+      run: conan profile new default --detect
+
+    - name: Set Conan profile
+      run: conan profile update settings.compiler.libcxx=libstdc++11 default
+
+    - name: Install dependancies with Conan
+      working-directory: ${{github.workspace}}/build
+      run: conan install .. --build 
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{github.workspace}}/build
+      # Note the current convention is to use the -S and -B options here to specify source 
+      # and build directories, but this is only available with CMake 3.13 and higher.  
+      # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+    - name: Build
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      run: VERBOSE=1 cmake --build .

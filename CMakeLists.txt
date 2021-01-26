@@ -20,5 +20,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(ft_server ${SRV_SOURCES})
 add_executable(ft_client ${CLI_SOURCES})
 
-target_link_libraries(ft_server ${CONAN_LIBS})
-target_link_libraries(ft_client ${CONAN_LIBS})
+target_link_libraries(ft_server PRIVATE ${CONAN_LIBS})
+target_link_libraries(ft_client PRIVATE ${CONAN_LIBS})
