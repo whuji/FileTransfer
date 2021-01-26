@@ -1,0 +1,5 @@
+peer_address: "127.0.0.1"
+peer_port: 8080
+listen_port: 8080
+root_path: /tmp/testdir
+enable_file_overwrite: false

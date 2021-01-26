@@ -1,0 +1,7 @@
+[requires]
+yaml-cpp/0.6.3
+openssl/1.1.1i
+spdlog/1.8.2
+
+[generators]
+cmake
